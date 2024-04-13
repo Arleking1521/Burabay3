@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{%load i18n%}
+{% block content %}
+<div class="content-split">
+    <div class="navigation">
+        <a href="{% url 'people'%}" >Лица НИИ</a>
+        <a href="{% url 'reviews'%}" class='selected'>Отзывы</a>
+        <a href="{% url 'doctors' %}">Наши врачи</a>
+        <a href="{% url 'teachers'%}">Наши педагоги</a>
+    </div>
+    <div >
+        <div class="new-review">
+            <p class="Title">{%trans 'Отзывы'%}</p>
+            <a href="{% url 'add-review' %}" class="btn2">{%trans 'Оставить Отзыв'%}</a>
+        </div>
+        {% for review in reviews %}
+            <div class="new-frame">
+                <div class="frame-header-block">
+                    <p><b>{{review.author}}</b></p>
+                </div>
+                <hr>
+                <span class="frame-content">{{review.review}} </span>
+                <div class="frame-btn">
+                    <p class="date">{{review.date}}</p>
+                    {% if not review.answer %}
+                        {% if  user.is_authenticated and user.is_staff %}
+                            <a href="{% url 'add-answer' rid=review.pk %}" class="btn">{%trans 'Ответить'%}</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                
+                {% for answer in review.answer %}
+                    <div class="new-frame">
+                        <span class="frame-content">{%trans 'Ответ'%} : {{answer.answer}} </span>
+                        <div class="frame-btn">
+                            <p class="date">{{answer.date}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load  i18n %}
+{% block content %}
+<div class="content-split">
+    <div class="navigation">
+        <a href="{% url 'people'%}" class='selected'>Лица НИИ</a>
+        <a href="{% url 'reviews'%}">Отзывы</a>
+        <a href="{% url 'doctors' %}">Наши врачи</a>
+        <a href="{% url 'teachers'%}">Наши педагоги</a>
+    </div>
+    <div class="rules">
+        <span class="Title">{% trans 'Люди НИИ' %}:</span>
+        <div>
+            <div class="rule-plates">
+                <h1>{% trans 'Руководители' %}</h1>
+                <div class = "person-list">
+                    {% for person in people %}
+                    {% if person.director %}
+                    <div class="person">
+                        <div class = "person-info">
+                            <div class = "person-photo" style = "background: url(../../media/{{person.image}});">
+                                
+                            </div>
+                            <h4>{{ person.name }}</h3>
+                            <p>{{ person.post }}</p>
+                            
+                        </div>
+                        <a href="{% url 'person_detail' pid=person.pk %}">Подробнее</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                
+            </div>
+            <div class="rule-plates">
+                <h2>{% trans 'Докторы' %}</h2>
+                <div class = "person-list">
+                {% for person in people %}
+                {% if person.doctor %}
+                <div class="person">
+                    <div class = "person-info">
+                        <div class = "person-photo" style = "background: url(../../media/{{person.image}});">
+                            
+                        </div>
+                        <h4>{{ person.name }}</h3>
+                        <p>{{ person.post }}</p>
+                        
+                    </div>
+                    <a href="{% url 'person_detail' pid=person.pk %}">Подробнее</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            <div class="rule-plates">
+                <h2>{% trans 'Педогоги' %}</h2>
+                <div class = "person-list">
+                {% for person in people %}
+                {% if person.teacher %}
+                <div class="person">
+                    <div class = "person-info">
+                        <div class = "person-photo" style = "background: url(../../media/{{person.image}});">
+                            
+                        </div>
+                        <h4>{{ person.name }}</h3>
+                        <p>{{ person.post }}</p>
+                        
+                    </div>
+                    <a href="{% url 'person_detail' pid=person.pk %}">Подробнее</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
